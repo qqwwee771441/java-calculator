@@ -1,17 +1,19 @@
 package com.example.calculator;
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
+import java.util.stream.Collectors;
 
-public class CalculatorLv2 {
-    private Queue<Integer> results;
+public class CalculatorLv3 {
+    private Queue<Double> results;
 
-    public CalculatorLv2() {
+    public CalculatorLv3() {
         results = new LinkedList<>();
     }
 
-    public int calculate(int num1, int num2, char operator) {
-        int result = 0;
+    public double calculate(double num1, double num2, char operator) {
+        double result = 0;
 
         switch (operator) {
             case '+': result = num1 + num2; break;
@@ -31,13 +33,19 @@ public class CalculatorLv2 {
         return result;
     }
 
-    public Queue<Integer> getResults() {
-        return new LinkedList<>(results); // 캡슐화 유지
-    }
-
     public void removeFirstResult() {
         if (!results.isEmpty()) {
             results.poll();
         }
+    }
+
+    public List<Double> getResultsGreaterThan(double threshold) {
+        return results.stream()
+                .filter(r -> r > threshold)
+                .collect(Collectors.toList());
+    }
+
+    public Queue<Double> getAllResults() {
+        return new LinkedList<>(results); // read-only view
     }
 }
